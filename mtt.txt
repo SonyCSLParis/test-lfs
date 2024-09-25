@@ -3,4 +3,9 @@ mtt.z02
 mtt.z03
 mtt.z04
 mtt.z05
+mtt.z06
+mtt.z07
+mtt.z08
+mtt.z09
+mtt.z10
 mtt.zip
