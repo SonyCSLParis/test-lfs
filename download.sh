@@ -14,6 +14,11 @@ MEDIA_URL=https://media.githubusercontent.com/media/$REPO/refs/heads/master
 DATASET=$1
 TEMPFILE=$(mktemp /tmp/XXXX.zip)
 
+if [ -f $DATASET/.done ]; then
+  echo "Dataset $DATASET already downloaded. Skip."
+  exit 0
+fi
+
 # retrieve the list of zip files
 wget -qO- $RAW_URL/$DATASET.txt | while IFS= read -r ZIPFILE; do
   wget -c --no-check-certificate $MEDIA_URL/$ZIPFILE
@@ -23,4 +28,4 @@ done
 trap 'rm $TEMPFILE' EXIT
 
 # merge the split archive and unzip it
-zip -F $DATASET.zip --out $TEMPFILE && unzip $TEMPFILE && rm $DATASET.z*
+zip -F $DATASET.zip --out $TEMPFILE && unzip $TEMPFILE && touch $DATASET/.done && rm $DATASET.z*
